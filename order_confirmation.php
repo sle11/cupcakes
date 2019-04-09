@@ -15,10 +15,23 @@ require 'functions.php';
     <title>Order Confirmation</title>
 </head>
 <body>
-    <p>Thank you, <?php echo $_POST['customer-name']; ?>, for your order!</p> <br>
-    <p></p>
+    <p>Thank you, <?php echo $_POST['customer-name']; ?>, for your order!</p>
+    <p>Order Summary:</p>
     <ul>
+        <?php
+        if(isset($_POST['flavors'])) {
+            foreach ($_POST['flavors'] as $value) {
+                foreach ($flavors as $key => $item) {
+                    if($value == $key) {
+                        echo '<li>' . $item . '</li>';
+//                        echo $item . '<br>';
 
+                    }
+
+                }
+            }
+        }
+        ?>
     </ul>
     <br>
     <p></p>
