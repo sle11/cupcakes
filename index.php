@@ -23,8 +23,8 @@ require 'functions.php';
         <label for="flavors[]">Cupcake flavors</label>
         <ul style="list-style-type: none">
             <?php
-            foreach ($flavors as $value) {
-                echo '<li><input type="checkbox" name="flavors[]" value="'. key($flavors) .'">' . $value . '</li>';
+            foreach ($flavors as $key => $value) {
+                echo '<li><input type="checkbox" name="flavors[]" value="'. $key .'">' . $value . '</li>';
             }
             ?>
         </ul>
