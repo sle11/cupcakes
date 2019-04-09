@@ -24,14 +24,14 @@ require 'flavors.php';
     <title>Order Confirmation</title>
 </head>
 <body>
-    <p>Thank you, <?php echo $_POST['customer-name']; ?>, for your order!</p>
+    <p>Thank you, <?php echo $_GET['customer-name']; ?>, for your order!</p>
     <p>Order Summary:</p>
     <ul>
         <?php
         // check if a flavor is set
-        if(isset($_POST['flavors'])) {
+        if(isset($_GET['flavors'])) {
             // looping through the flavor in the form; this will return the key
-            foreach ($_POST['flavors'] as $value) {
+            foreach ($_GET['flavors'] as $value) {
                 // looping through the flavor in the associative array
                 foreach ($flavors as $key => $item) {
                     // check if the key in the form and key in the array match
@@ -42,14 +42,17 @@ require 'flavors.php';
                 }
             }
         }
+        else {
+            echo 'You did not order anything';
+        }
         ?>
     </ul>
     <br>
     <p>Order Total:
         <?php
-            $amount = count($_POST['flavors']);
-            $total = $amount * $price;
-            echo '$' . number_format($total, 2);
+        $amount = count($_POST['flavors']);
+        $total = $amount * $price;
+        echo '$' . number_format($total, 2);
         ?>
     </p>
 </body>
