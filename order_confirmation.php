@@ -24,8 +24,6 @@ require 'functions.php';
                 foreach ($flavors as $key => $item) {
                     if($value == $key) {
                         echo '<li>' . $item . '</li>';
-//                        echo $item . '<br>';
-
                     }
 
                 }
@@ -34,6 +32,12 @@ require 'functions.php';
         ?>
     </ul>
     <br>
-    <p></p>
+    <p>Order Total:
+        <?php
+            $amount = count($_POST['flavors']);
+            $total = $amount * $price;
+            echo '$' . number_format($total, 2);
+        ?>
+    </p>
 </body>
 </html>
