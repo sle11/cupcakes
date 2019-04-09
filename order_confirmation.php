@@ -12,8 +12,19 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require 'flavors.php';
-?>
 
+$errors = [];
+
+if(empty($_GET['customer-name'])) {
+    $errors[] = 'You forgot to enter your name.';
+}
+
+if(empty($_GET['flavors'])) {
+    $errors[] = 'You forgot to select a flavor';
+}
+
+if(empty($errors)) {
+    ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,9 +39,6 @@ require 'flavors.php';
     <p>Order Summary:</p>
     <ul>
         <?php
-        // check if a flavor is set
-        if(isset($_GET['flavors'])) {
-            // looping through the flavor in the form; this will return the key
             foreach ($_GET['flavors'] as $value) {
                 // looping through the flavor in the associative array
                 foreach ($flavors as $key => $item) {
@@ -38,22 +46,32 @@ require 'flavors.php';
                     if($value == $key) {
                         echo '<li>' . $item . '</li>';
                     }
-
                 }
             }
-        }
-        else {
-            echo 'You did not order anything';
-        }
         ?>
     </ul>
     <br>
     <p>Order Total:
         <?php
-        $amount = count($_POST['flavors']);
-        $total = $amount * $price;
-        echo '$' . number_format($total, 2);
+            $amount = count($_GET['flavors']);
+            $total = $amount * $price;
+            echo '$' . number_format($total, 2);
         ?>
     </p>
 </body>
 </html>
+<?php
+}
+else {
+    echo '
+        <p>Something went wrong!</p>
+        <p>The following error(s) occurred:<br>';
+        foreach($errors as $message) {
+            echo " - $message<br>\n";
+        }
+        echo '</p>
+              <p>Please try again.</p>';
+
+        require 'index.php';
+}
+?>
