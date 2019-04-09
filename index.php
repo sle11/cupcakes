@@ -25,15 +25,28 @@ require 'flavors.php';
 </head>
 <body>
     <h1>Cupcake Fundraiser</h1>
-    <form action="order_confirmation.php" method="post">
+    <form action="order_confirmation.php" method="get">
         <label for="customer-name">Your name:</label> <br>
-        <input type="text" name="customer-name" id="customer-name" placeholder="Please input your name."> <br>
+        <input type="text" name="customer-name" id="customer-name" placeholder="Please input your name." value="<?php if(isset($_GET['customer-name'])) echo $_GET['customer-name']; ?>"> <br>
 
         <label for="flavors[]">Cupcake flavors</label>
         <ul style="list-style-type: none">
             <?php
             foreach ($flavors as $key => $value) {
-                echo '<li><input type="checkbox" name="flavors[]" value="'. $key .'">' . $value . '</li>';
+                if(isset($_GET['flavors'])) {
+                    foreach($_GET['flavors'] as $item) {
+                        if ($key == $item) {
+                            echo '<li><input type="checkbox" name="flavors[]" value="' . $key . '" checked>' . $value . '</li>';
+                        }
+                        else {
+                            echo '<li><input type="checkbox" name="flavors[]" value="'. $key .'">' . $value . '</li>';
+                        }
+                    }
+                }
+                else {
+                    echo '<li><input type="checkbox" name="flavors[]" value="'. $key .'">' . $value . '</li>';
+                }
+
             }
             ?>
         </ul>
